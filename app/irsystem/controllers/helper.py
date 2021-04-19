@@ -12,6 +12,15 @@ with open(jsonPath, "r") as f:
 kvList = list(transcripts.items())
 newsList = []
 for pub, lst in kvList:
+    print(len(lst[0]))
     for news in lst[0]:
         newsList.append(news)
-print(newsList[0])
+
+
+def verbatim_search_on_title(query):
+    result = []
+    for news in newsList:
+        title = news["title"]
+        if query in title:
+            result.append(title)
+    return result[:10]
