@@ -28,15 +28,26 @@ def verbatim_search_on_title(query):
         title = news["title"]
         if query in title:
             result.append(title)
+    if len(result) < 10:
+        return result
     return random.sample(result, 10)
 
 
-def social_component_hotsearch_pm03(query):
-    querySearchHistory = []
-    if query not in querySearchHistory:
-        querySearchHistory.append(query)
-    return querySearchHistory
+history = []
 
+
+def hot_search(query):
+    if query not in history:
+        history.append(query)
+
+
+def list_to_str(str_lst):
+    result = ""
+    index = 0
+    for string in str_lst:
+        result = result + (" " if index == 0 else ", ") + string
+        index += 1
+    return result
 
 
 @irsystem.route('/', methods=['GET'])
@@ -46,6 +57,8 @@ def search():
         data = []
         output_message = 'Please enter a valid keyword in the search bar'
     else:
-        output_message = "Your search: " + query
-        data = social_component_hotsearch_pm03(query) + verbatim_search_on_title(query)
+        hot_search(query)
+        output_message = "Your search: " + query + "---" + \
+            "Your search history:" + list_to_str(history)
+        data = verbatim_search_on_title(query)
     return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, data=data)
