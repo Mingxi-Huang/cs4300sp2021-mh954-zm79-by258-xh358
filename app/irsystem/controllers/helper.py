@@ -1,5 +1,6 @@
 import json
 import nltk
+import random
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
 jsonPath = dir_path+'/../../../datasource/4300news.json'
@@ -23,4 +24,6 @@ def verbatim_search_on_title(query):
         title = news["title"]
         if query in title:
             result.append(title)
-    return result[:10]
+    return random.sample(result, 10)
+
+    
