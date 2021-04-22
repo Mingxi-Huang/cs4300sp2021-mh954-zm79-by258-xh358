@@ -61,3 +61,8 @@ def verbatim_search_on_title(query):
             result.append(title)
     return random.sample(result, 10)
 
+str1 = "The Times has been documenting the murders logged this year in the 40th Precinct, one of a handful of neighborhoods where deadly violence remains "
+str2 = "The Times has been documenting the murders logged this year in the 40th Precinct, one of a handful of neighborhoods where deadly violence remains very high"
+
+sim = get_cos_similarity(text_to_vector(str1),text_to_vector(str2))
+print(sim)

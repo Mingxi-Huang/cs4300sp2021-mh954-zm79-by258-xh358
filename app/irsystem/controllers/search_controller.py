@@ -1,8 +1,12 @@
+from app.irsystem.controllers.helper import tokenize
 from . import *
 from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 import os
+import re
 import random
+from collections import Counter
+import math
 
 project_name = "Go!News"
 net_id = "Simon Huang (mh954), Beining Yang(by258), Zhiqian Ma(zm79), Xirui He(xh358)"
@@ -32,7 +36,7 @@ def verbatim_search_on_title(query):
         return result
     return random.sample(result, 10)
 
-print(kvList)
+# print(kvList)
 
 
 history = []
@@ -50,6 +54,45 @@ def list_to_str(str_lst):
     return result
 
 
+#-------------------------------
+def tokenize(searchContent):
+    return [x for x in re.findall(r"[a-z]+", searchContent.lower())]
+
+# titleList = [x["title"] for x in news]
+
+WORD = re.compile(r"\w+")
+def get_cos_similarity(vec_text1, vec_text2):
+    intersection = set(vec_text1.keys()) & set(vec_text2.keys())
+    numerator = sum([vec_text1[x] * vec_text2[x] for x in intersection])
+    sum1 = sum([vec_text1[x] ** 2 for x in list(vec_text1.keys())])
+    sum2 = sum([vec_text2[x] ** 2 for x in list(vec_text2.keys())])
+    denominator = math.sqrt(sum1) * math.sqrt(sum2)
+
+    if not denominator:
+        return 0.0
+    else:
+        return float(numerator) / denominator
+
+def text_to_vector(text):
+    words = WORD.findall(text)
+    return Counter(words)
+
+
+def sim_search(query):
+    qvec = text_to_vector(query)
+    result = []
+    for news in newsList:
+        title = news['title']
+        tvec = text_to_vector(title)
+        sim_measure = get_cos_similarity(qvec, tvec)
+        news['sim'] = sim_measure
+        result.append((news['title'], news['content'], news['sim']))
+    result = sorted(result, key= lambda x : x[2], reverse=True)
+    returnList = [(x[0], x[2]) for x in result]
+    return returnList[:10]
+
+
+
 @irsystem.route('/', methods=['GET'])
 def search():
     query = request.args.get('search')
@@ -60,5 +103,5 @@ def search():
         hot_search(query)
         output_message = "Your search: " + query + "---" + \
             "Your search history:" + list_to_str(history)
-        data = verbatim_search_on_title(query)
+        data = sim_search(query)
     return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, data=data)
