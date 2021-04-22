@@ -72,7 +72,7 @@ def text_to_vector(text):
     return Counter(words)
 
 def get_first_sentence (content):
-    contentList = content.split('.')
+    contentList = content.split('.'+ ' ')
     return contentList[0]
 
 def sim_search(query):
@@ -102,8 +102,4 @@ def search():
         output_message = "Your search: " + query 
         #search_history = "Your search history:" + list_to_str(history)
         data = sim_search(query)
-
-
-
-
     return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, data=data)
