@@ -18,12 +18,12 @@ padding:10px;
 }
 .global-search .form-control {
 width:500px;
-position: sticky;
-position: -webkit-sticky;
 }
 .global-search * {
 display:inline-block;
 margin-bottom:0;
+position: -webkit-sticky; /* Safari */
+position: sticky;
 }
 }
 .topcorner{

@@ -29,11 +29,11 @@
     <form class="form-inline global-search">
 
         {% if data %}
-        <h1>{{output_message}}</h1>
+        <h2>{{output_message}}</h2>
         {% for d in data %}
         <br>
         <a href={{d[1]}}> {{d[0]}} </a>
-        <p>{{d[2]}}</p>
+        <p>({{d[2]}})</p>
         <br><p></p></br>
         {% endfor %}
         {% endif %}
