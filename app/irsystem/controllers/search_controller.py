@@ -1,4 +1,3 @@
-from app.irsystem.controllers.helper import tokenize
 from . import *
 from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
@@ -15,15 +14,10 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 jsonPath = dir_path+'/../../../datasource/4300news.json'
 
 with open(jsonPath, "r") as f:
-    transcripts = json.load(f)
+    newsList = json.load(f)
 
 # pubDict: {'NYT':[[news],count],'guardian':[[news],count],......}
 # kvList: [(NYT, [[list of news], count]),(Guardian,[[list of news],count]), ......]
-kvList = list(transcripts.items())
-newsList = []
-for pub, lst in kvList:
-    for news in lst[0]:
-        newsList.append(news)
 
 
 def verbatim_search_on_title(query):
@@ -77,6 +71,9 @@ def text_to_vector(text):
     words = WORD.findall(text)
     return Counter(words)
 
+def get_first_sentence (content):
+    contentList = content.split('.')
+    return contentList[0]
 
 def sim_search(query):
     qvec = text_to_vector(query)
@@ -86,9 +83,10 @@ def sim_search(query):
         tvec = text_to_vector(title)
         sim_measure = get_cos_similarity(qvec, tvec)
         news['sim'] = sim_measure
-        result.append((news['title'], news['content'], news['sim']))
+        news['first_sent'] = get_first_sentence(news['content']) + ' ...'
+        result.append((news['title'], news['first_sent'], news['sim'], news['url']))
     result = sorted(result, key= lambda x : x[2], reverse=True)
-    returnList = [(x[0], x[2]) for x in result]
+    returnList = [(x[0], x[3], x[2]) for x in result]
     return returnList[:10]
 
 
@@ -101,7 +99,11 @@ def search():
         output_message = 'Please enter a valid keyword in the search bar'
     else:
         hot_search(query)
-        output_message = "Your search: " + query + "---" + \
-            "Your search history:" + list_to_str(history)
+        output_message = "Your search: " + query 
+        #search_history = "Your search history:" + list_to_str(history)
         data = sim_search(query)
+
+
+
+
     return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, data=data)
