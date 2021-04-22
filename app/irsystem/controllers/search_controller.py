@@ -32,10 +32,10 @@ def verbatim_search_on_title(query):
         return result
     return random.sample(result, 10)
 
+print(kvList)
+
 
 history = []
-
-
 def hot_search(query):
     if query not in history:
         history.append(query)
