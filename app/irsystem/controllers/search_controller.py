@@ -24,77 +24,7 @@ jsonPath = dir_path+'/../../../datasource/4300news.json'
 with open(jsonPath, "r") as f:
     newsList = json.load(f)
 
-# # Make nparray 
-# with open("4300news.json") as f:
-#     newsList = np.array(json.load(f))
-# # Update with preprocess 
-# def preprocess(query):
-# #     Takes in a query (string) and returns a string with all lowercase and without punctuation.
-#     query=query.lower()
-#     text = "".join([ele for ele in query if ele not in string.punctuation and ele not in ["”", "—", "“",",","’"]])
-#     return text
 
-# count_label=0
-# for item in newsList:
-#     item["merged_content"]=preprocess(item["title"]+". "+item["content"])
-#     item['article_index_number']=count_label
-#     count_label+=1
-
-# #add build inverted index 
-# corpus={int(i['article_index_number']):i["merged_content"] for i in newsList}
-# def build_inverted_index(news):
-#     tok_dict=defaultdict(list)
-#     for ind,txt in news.items():
-#         word_counter=Counter(txt.split())
-#         for word in word_counter.keys():
-#             if word in tok_dict:
-#                 tok_dict[word].append((ind,word_counter[word]))
-#             else:
-#                 tok_dict[word]=[(ind,word_counter[word])]
-#     return tok_dict
-# ind=build_inverted_index(corpus)
-# # idf 
-# def compute_idf(inv_idx, n_news=21000, min_df=10, max_df_ratio=0.95):
-#     w_dict={}
-#     for word in inv_idx.keys():
-#         if len(inv_idx[word]) >=min_df and len(inv_idx[word])/n_news <= max_df_ratio:  
-#             ratio=np.log2(n_news/(1+len(inv_idx[word])))
-#             w_dict[word]=np.round(ratio,2)
-#     return w_dict
-# ind_to_idf=compute_idf(ind)
-
-# #compute news norms(number of news =21000)
-# def compute_news_norms(index, idf, n_news=21000):    
-#     norms=np.zeros(n_news)
-#     for word in idf.keys():
-#         for i in range(len(index[word])):
-#             norms[index[word][i][0]]+= ((index[word][i][1]*idf[word])**2)
-#     return np.sqrt(norms)
-# dnorms=compute_news_norms(ind,ind_to_idf)
-
-# #use index search-cosine similarity to determine the similarity scores
-# def index_search(query, index=ind, idf=ind_to_idf, news_norms=dnorms, tokenizer=TreebankWordTokenizer):
-#     querytokenlist=TreebankWordTokenizer().tokenize(query.lower())
-#     setquery = set(querytokenlist)
-#     querynorm = 0
-#     for word2 in setquery: 
-#         if word2 in idf:
-#             querynorm = querynorm + pow(querytokenlist.count(word2)*idf[word2], 2)
-#     querynorm = np.sqrt(querynorm)
-#     scorenews = np.zeros(news_norms.size, dtype=float)
-#     scorelist = []
-#     for word2 in setquery:
-#         if word2 in index:
-#             for (news_id, tf) in index[word2]:
-#                 scorenews[news_id] = scorenews[news_id]+(querytokenlist.count(word2)*tf*idf[word2]*idf[word2])/(news_norms[news_id]*querynorm)
-#     for i in range(0, scorenews.size):
-#         scorelist.append((scorenews[i], i))
-#     finalscorelist = sorted(scorelist, key= lambda x: x[0], reverse = True)
-#     topscores= sorted(final, reverse=True)[:10]
-
-#    # now only show the top scores and the id need to link the article id and get the title, publication, publication year and score
-# #     topdic={score:[_______] for score, article_id in topscores} #may want to return the title, publication,publication year and score
-#     return topscores
 
     
 
