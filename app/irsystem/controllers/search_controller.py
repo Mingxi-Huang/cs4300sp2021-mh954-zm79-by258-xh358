@@ -20,7 +20,7 @@ project_name = "Go!News"
 net_id = "Simon Huang (mh954), Beining Yang(by258), Zhiqian Ma(zm79), Xirui He(xh358)"
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-jsonPath = dir_path+'/../../../datasource/4300news.json'
+jsonPath = dir_path+'/../../../datasource/newsdata.json'
 
 with open(jsonPath, "r") as f:
     newsList = json.load(f)
