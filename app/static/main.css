@@ -11,7 +11,9 @@ text-align:center;
 body {
 padding-top: 15%;
 padding-bottom: 15px;
-background:url('img/news.jpg')
+background:url('img/news.jpg');
+background-repeat: no-repeat;
+background-size: cover;
 
 /* background:url('img/news.jpg')center center cover no-repeat;  */
 /* background-repeat: no-repeat;
@@ -22,6 +24,8 @@ background-position:center; */
 .global-search {
 text-align:center;
 padding:10px;
+
+
 }
 .global-search .form-control {
 width:500px;
@@ -33,6 +37,11 @@ position: -webkit-sticky; /* Safari */
 position: sticky;
 }
 }
+.output{
+    box-shadow: 0px 15px 30px -15px rgba(0,0,0,0.75);
+    color: #fff;
+}
+
 .topcorner{
 position:absolute;
 top:2%;

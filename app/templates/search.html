@@ -11,6 +11,9 @@
         <p>Student Name: {{ netid }}
         </p>
     </div>
+
+    <!-- <div style="background:url('img/news.jpg');"> -->
+
     <form class="form-inline global-search" style="text-align: center;">
         <h1 style="font-size: 60px; font-family:Bodoni MT; color:rgb(37, 19, 19);text-align: center;">
             Go! News
@@ -25,8 +28,9 @@
     </form>
 
 
-
-    <form class="form-inline global-search">
+    <div id="output">
+        <div class="container">
+            <form class="form-inline global-search">
 
         {% if data %}
         <h1>{{output_message}}</h1>
@@ -41,6 +45,8 @@
         {% endif %}
 
     </form>
+    </div>
+    </div>
 </body>
 
 </html>
