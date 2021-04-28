@@ -28,17 +28,21 @@
     </form>
 
 
-    <div id="output">
+    <div class="output">
         <div class="container">
             <form class="form-inline global-search">
 
         {% if data %}
-        <h1>{{output_message}}</h1>
+        <h2>{{output_message}}</h2>
 
         {% for d in data %}
         <br>
+        <div class="newstitle">
         <a href={{d[1]}}> {{d[0]}} </a>
+        </div>
+        <div class="newsscore">
         <p>{{d[2]}}</p>
+       </div>
         <br>
         <p></p></br>
         {% endfor %}

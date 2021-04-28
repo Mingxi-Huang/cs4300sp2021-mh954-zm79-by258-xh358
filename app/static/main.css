@@ -48,14 +48,31 @@ position: sticky;
 box-shadow: 0px 25px 50px -10px rgba(0,0,0,0.75);
 background-color: #fff8DC;
 display: block;
-border: 2px solid #c3c3c3;
+border: 8px solid #f1f0f0;
 text-align: justify;
 margin:10px;
 margin-left:30px;
 margin-right:30px;
 border-radius: 30px;
+opacity: 0.96;
+}
+h2{
+    font-family: didot;
 }
 
+.newstitle {
+    text-align: left;
+    font-size: 15;
+    font-family: didot;
+    margin: 5;
+}
+.newsscore{
+    text-align: left;
+    font-size: 15;
+    font-family: didot;
+    margin: 5;
+
+}
 .topcorner{
 position:absolute;
 top:2%;
