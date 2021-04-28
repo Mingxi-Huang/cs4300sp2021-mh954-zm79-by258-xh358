@@ -11,9 +11,13 @@ text-align:center;
 body {
 padding-top: 15%;
 padding-bottom: 15px;
-background:url('img/news.jpg');
-background-repeat: no-repeat;
+background:url('img/news.jpg') no-repeat;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
 background-size: cover;
+/* background-repeat: no-repeat;
+background-size: cover; */
 
 /* background:url('img/news.jpg')center center cover no-repeat;  */
 /* background-repeat: no-repeat;
@@ -40,6 +44,7 @@ position: sticky;
 .output{
     box-shadow: 0px 15px 30px -15px rgba(0,0,0,0.75);
     color: #fff;
+    display: block;
 }
 
 .topcorner{
