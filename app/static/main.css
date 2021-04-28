@@ -45,14 +45,14 @@ position: sticky;
 }
 }
 .output{
-box-shadow: 0px 15px 30px -15px rgba(0,0,0,0.75);
-background-color: #fff;
+box-shadow: 0px 25px 50px -10px rgba(0,0,0,0.75);
+background-color: #fff8DC;
 display: block;
 border: 2px solid #c3c3c3;
 text-align: justify;
 margin:10px;
 margin-left:30px;
-
+border-radius: 30px;
 }
 
 .topcorner{
