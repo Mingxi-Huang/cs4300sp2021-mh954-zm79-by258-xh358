@@ -6,6 +6,7 @@
 </head>
 
 <body>
+    <button onclick="tFunction()" id="bon" title="Go to top">Top</button>
     <div class="topcorner">
         <p>Project Name: {{ name }} </p>
         <p>Student Name: {{ netid }}
@@ -52,6 +53,28 @@
     </form>
     </div>
     </div>
+    
+<script>
+//Get the button
+var button = document.getElementById("bon");
+
+//show down
+window.onscroll = function() {sFunction()};
+
+function sFunction() {
+ if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {
+    button.style.display = "block";
+  } else {
+    button.style.display = "none";
+  }
+}
+
+//to the top
+function tFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
 </body>
 
 </html>

@@ -132,6 +132,25 @@ border: none;
 color: #172a49;
 }
 
+#bon {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    font-size: 15px;
+    z-index: 80;
+    border: none;
+    outline: none;
+    background-color: rgb(110, 30, 30);
+    color: white;
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 40px;
+  }
+  
+  #bon:hover {
+    background-color: rgb(78, 230, 230);
+  }
 /* Image citation */
 /* <a href='https://www.freepik.com/photos/people'>People photo created by wirestock - www.freepik.com</a> */
 
