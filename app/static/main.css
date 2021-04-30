@@ -1,3 +1,10 @@
+/* Image citation */
+/* <a href='https://www.freepik.com/photos/people'>People photo created by wirestock - www.freepik.com</a> */
+
+/* HTML CSS JavaScript citation
+<a href='https://www.w3schools.com/'> For general HTML/CSS/Javascript reference</a> */
+
+
 @media (min-width: 1200px) {
 .container {
     max-width: 970px;
@@ -151,6 +158,5 @@ color: #172a49;
   #bon:hover {
     background-color: rgb(78, 230, 230);
   }
-/* Image citation */
-/* <a href='https://www.freepik.com/photos/people'>People photo created by wirestock - www.freepik.com</a> */
+
 
