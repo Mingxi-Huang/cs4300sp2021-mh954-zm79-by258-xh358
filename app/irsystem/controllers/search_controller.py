@@ -15,6 +15,7 @@ import string
 from collections import defaultdict
 from collections import Counter
 import numpy as np
+from app.irsystem.controllers.redditRequest import getRedditData, top_five, getRedditResult
 
 project_name = "Go!News"
 net_id = "Simon Huang (mh954), Beining Yang(by258), Zhiqian Ma(zm79), Xirui He(xh358)"
@@ -24,17 +25,6 @@ jsonPath = dir_path+'/../../../datasource/categorized_news.json'
 
 with open(jsonPath, "r") as f:
     newsList = json.load(f)
-
-
-# pubDict: {'NYT':[[news],count],'guardian':[[news],count],......}
-# kvList: [(NYT, [[list of news], count]),(Guardian,[[list of news],count]), ......]
-
-
-# define new_search(query)
-
-
-def process_query(query):
-    split_query = split
 
 
 def verbatim_search_on_title(query):
@@ -127,16 +117,33 @@ def sim_search(query):
     return returnList[:10]
 
 
+def getComments(keyword):
+    data = getRedditResult(keyword=keyword)
+    return data
+
+
 @irsystem.route('/', methods=['GET'])
 def search():
     query = request.args.get('search')
     if not query:
+        reddit = []
         data = []
+        context = dict()
         output_message = 'Please enter a valid keyword in the search bar'
     else:
-        hot_search(query)
         output_message = "Your search: " + query
+        lst = query.split(' ')
+        reddit = []
+        for word in lst:
+            reddit_lst = getComments(word)
+            for item in reddit_lst:
+                reddit.append(item)
         #search_history = "Your search history:" + list_to_str(history)
-        data = sim_search(query)
+        news = sim_search(query)
+
+        context = {
+            'reddit': reddit,
+            'news': news
+        }
         #data = index_search(query)
-    return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, data=data)
+    return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, context=context)

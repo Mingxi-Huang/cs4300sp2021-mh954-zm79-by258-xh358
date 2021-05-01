@@ -29,52 +29,69 @@
     </form>
 
 
-   
-        <div class="container">
-            <form class="form-inline global-search">
 
-        {% if data %}
-        <h2>{{output_message}}</h2>
-    
-        <div class="output">
-        {% for d in data %}
-        <br>
-        <div class="newstitle">
-        <a href={{d[1]}}> {{d[0]}} </a>
-        </div>
-        <div class="newsscore">
-        <p>Ranking Score: {{d[2]}}</p>
-       </div>
-        <br>
-        <p></p></br>
-        {% endfor %}
-        {% endif %}
+    <div class="container">
+        <form class="form-inline global-search">
 
-    </form>
+            {% if context %}
+            <h2>{{output_message}}</h2>
+
+            <div class="output">
+                {% for d in context.news %}
+                <br>
+                <div class="newstitle">
+                    <a href={{d[1]}}> {{d[0]}} </a>
+                </div>
+                <div class="newsscore">
+                    <p>Ranking Score: {{d[2]}}</p>
+                </div>
+                <br>
+                <p></p></br>
+                {% endfor %}
+            </div>
+            <h2>Hot posts in related subreddit </h2>
+            <div class="output">
+
+                {% for d in context.reddit %}
+                <br>
+                <div class="reddit-title">
+
+
+                    <a href={{d[2]}}> {{d[0]}} </a>
+                </div>
+                <div class="reddit-text">
+                    <p> {{d[1]}}</p>
+                </div>
+                <br>
+                <p></p></br>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </form>
+
     </div>
-    </div>
-    
-<script>
-//Get the button
-var button = document.getElementById("bon");
 
-//show down
-window.onscroll = function() {sFunction()};
+    <script>
+        //Get the button
+        var button = document.getElementById("bon");
 
-function sFunction() {
- if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {
-    button.style.display = "block";
-  } else {
-    button.style.display = "none";
-  }
-}
+        //show down
+        window.onscroll = function () { sFunction() };
 
-//to the top
-function tFunction() {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-}
-</script>
+        function sFunction() {
+            if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {
+                button.style.display = "block";
+            } else {
+                button.style.display = "none";
+            }
+        }
+
+        //to the top
+        function tFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
 </body>
 
 </html>
