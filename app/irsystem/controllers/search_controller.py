@@ -129,9 +129,9 @@ def search():
         reddit = []
         data = []
         context = dict()
-        output_message = 'Please enter a valid keyword in the search bar'
+        output_message = ''
     else:
-        output_message = "Your search: " + query
+        output_message = query
         lst = query.split(' ')
         reddit = []
         for word in lst:

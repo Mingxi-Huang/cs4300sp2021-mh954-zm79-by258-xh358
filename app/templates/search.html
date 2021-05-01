@@ -23,7 +23,7 @@
         <br><br>
 
         <div class="form-group">
-            <input id="input" type="text" name="search" class="form-control" placeholder="Your Input">
+            <input id="input" type="text" name="search" class="form-control" placeholder="Please enter your search here:" value="{{output_message}}">
         </div>
         <button type="submit" class="btn btn-info"> Go! </button>
     </form>
@@ -34,7 +34,7 @@
         <form class="form-inline global-search">
 
             {% if context %}
-            <h2>{{output_message}}</h2>
+            <!-- <h2>{{output_message}}</h2> -->
 
             <div class="output">
                 {% for d in context.news %}
