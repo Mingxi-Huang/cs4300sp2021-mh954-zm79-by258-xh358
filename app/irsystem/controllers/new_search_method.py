@@ -22,15 +22,6 @@ tfidf_mat = tfidf_vec.fit_transform([d['title'] for d in newsList]).toarray()
 
 
 def get_cos_sim(query, doc, tfidf_vec):
-    """Returns the cosine similarity of two movie scripts.
-
-    Params: {mov1: String,
-             mov2: String,
-             input_doc_mat: np.ndarray,
-             movie_name_to_index: Dict}
-    Returns: Float
-    """
-    # YOUR CODE HERE
     vec1 = tfidf_vec.fit_transform(query)
     vec2 = tfidf_vec.fit_transform(doc)
     dotprod = np.dot(vec1, vec2)
