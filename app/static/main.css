@@ -2,7 +2,7 @@
 /* <a href='https://www.freepik.com/photos/people'>People photo created by wirestock - www.freepik.com</a> */
 
 /* HTML CSS JavaScript citation
-<a href='https://www.w3schools.com/'> For general HTML/CSS/Javascript reference</a> */
+<a href='https://www.w3schools.com/'&'https://codereview.stackexchange.com/'> For general HTML/CSS/Javascript reference</a> */
 
 
 @media (min-width: 1200px) {
@@ -94,7 +94,16 @@ border-radius: 30px;
 opacity: 0.96;
 font-weight: 100;
 }
-
+h3{
+font-family: didot;
+box-shadow: 0px 25px 50px -10px rgba(0,0,0,0.75);
+margin:10px;
+margin-left:30px;
+margin-right:30px;
+border-radius: 30px;
+font-weight: bold;
+color:#f7f3f3;
+}
 .newstitle {
     text-align: left;
     font-size: 20;
@@ -122,7 +131,7 @@ font-weight: 100;
     text-align: left;
     font-size: 18;
     font-family: didot;
-    margin: 5;
+    margin: 10;
 
 }
 .topcorner{
@@ -160,3 +169,32 @@ color: #172a49;
   }
 
 
+  .reddit-title {
+    text-align: left;
+    font-size: 18;
+    font-family: didot;
+    margin: 5;
+    box-shadow:
+        0 -1px 3px 0 rgba(218, 217, 217, 0.85),
+        0 3px 3px 0 #ffff,
+        0 2px 2px 1px #f8f7f7,
+        0 3px 3px 0 #c9c8c8 inset,
+        0 -2px 2px 0 #f2f2f2 inset,
+        0 15px 15px 0 rgba(35, 35, 35, 0.12) inset;
+    border-radius:2px;
+    color: brown;
+    
+}
+.reddit-title:hover {
+    transform: scale(1.055);
+    filter: blur(0px);
+    opacity: 1.5;
+    box-shadow: 0 8px 10px 0px rgb(0 0 0 / 10%);
+}
+.reddit-text{
+    text-align: justify;
+    font-size: 18;
+    font-family: didot;
+    margin: 15;
+
+}

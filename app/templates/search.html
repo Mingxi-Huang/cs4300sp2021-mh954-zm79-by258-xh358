@@ -1,8 +1,14 @@
+<!-- /* HTML CSS JavaScript citation
+<a href='https://www.w3schools.com/'&'https://codereview.stackexchange.com/'> For HTML/CSS/Javascript reference</a> */ -->
+<!-- Acknowledgement: use some codes in link:
+https://codereview.stackexchange.com/questions/177945/convert-rating-value-to-visible-stars-using-fontawesome-icons
+https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
 <html>
 
 <head>
     <link rel="stylesheet" href="/static/bootstrap.min.css">
     <link rel="stylesheet" href="/static/main.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -43,13 +49,13 @@
                     <a href={{d[1]}}> {{d[0]}} </a>
                 </div>
                 <div class="newsscore">
-                    <p>Ranking Score: {{d[2]}}</p>
+                    <p>Ranking Score: {{d[2]}}  <span class="stars" score={{d[2]}}></span></p>
                 </div>
                 <br>
                 <p></p></br>
                 {% endfor %}
             </div>
-            <h2>Hot posts in related subreddit </h2>
+            <h3>Hot posts in related subreddit </h3>
             <div class="output">
 
                 {% for d in context.reddit %}
@@ -92,6 +98,36 @@
             document.documentElement.scrollTop = 0;
         }
     </script>
+    <script>
+        number =  0.35*10
+        var stars = document.getElementsByClassName("stars");
+        for (var i = 0; i < stars.length; i++) {
+            var star = stars[i];
+            var score = parseFloat(star.getAttribute('score')) * 5;
+            star.innerHTML = getStars(score);
+        }
+        
+        function getStars(ranking) {
+        
+          // Round to nearest half
+          ranking = Math.round(ranking * 2) / 2;
+          let output = [];
+        
+          // Append all the filled whole stars
+          for (var i = ranking; i >= 1; i--)
+            output.push('<i class="fa fa-star" aria-hidden="true" style="color: orange;"></i>&nbsp;');
+        
+          // If there is a half a star, append it
+          if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: orange;"></i>&nbsp;');
+        
+          // Fill the empty stars
+          for (let i = (5 - ranking); i >= 1; i--)
+            output.push('<i class="fa fa-star-o" aria-hidden="true" style="color: orange;"></i>&nbsp;');
+        
+          return output.join('');
+        
+        }
+        </script>
 </body>
 
 </html>
