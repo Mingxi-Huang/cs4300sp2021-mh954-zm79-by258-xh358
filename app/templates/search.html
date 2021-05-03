@@ -29,7 +29,8 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
         <br><br>
 
         <div class="form-group">
-            <input id="input" type="text" name="search" class="form-control" placeholder="Please enter your search here:" value="{{output_message}}">
+            <input id="input" type="text" name="search" class="form-control"
+                placeholder="Please enter your search here:" value="{{output_message}}">
         </div>
         <button type="submit" class="btn btn-info"> Go! </button>
     </form>
@@ -49,7 +50,7 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
                     <a href={{d[1]}}> {{d[0]}} </a>
                 </div>
                 <div class="newsscore">
-                    <p>Ranking Score: {{d[2]}}  <span class="stars" score={{d[2]}}></span></p>
+                    <p>Ranking Score: {{d[2]}} <span class="stars" score={{d[2]}}></span></p>
                 </div>
                 <br>
                 <p></p></br>
@@ -100,35 +101,35 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
     </script>
     <!-- star -->
     <script>
-        
+
         var stars = document.getElementsByClassName("stars");
         for (var i = 0; i < stars.length; i++) {
             var star = stars[i];
             var score = parseFloat(star.getAttribute('score')) * 5;
             star.innerHTML = getStars(score);
         }
-        
+
         function getStars(ranking) {
-        
-          // Round to nearest half
-          ranking = Math.round(ranking * 2) / 2;
-          let output = [];
-        
-          // Append all the filled whole stars
-          for (var i = ranking; i >= 1; i--)
-            output.push('<i class="fa fa-star" aria-hidden="true" style="color: orange;"></i>&nbsp;');
-        
-          // If there is a half a star, append it
-          if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: orange;"></i>&nbsp;');
-        
-          // Fill the empty stars
-          for (let i = (5 - ranking); i >= 1; i--)
-            output.push('<i class="fa fa-star-o" aria-hidden="true" style="color: orange;"></i>&nbsp;');
-        
-          return output.join('');
-        
+
+            // Round to nearest half
+            ranking = Math.round(ranking * 2) / 2;
+            let output = [];
+
+            // Append all the filled whole stars
+            for (var i = ranking; i >= 1; i--)
+                output.push('<i class="fa fa-star" aria-hidden="true" style="color: orange;"></i>&nbsp;');
+
+            // If there is a half a star, append it
+            if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: orange;"></i>&nbsp;');
+
+            // Fill the empty stars
+            for (let i = (5 - ranking); i >= 1; i--)
+                output.push('<i class="fa fa-star-o" aria-hidden="true" style="color: orange;"></i>&nbsp;');
+
+            return output.join('');
+
         }
-        </script>
+    </script>
 </body>
 
 </html>
