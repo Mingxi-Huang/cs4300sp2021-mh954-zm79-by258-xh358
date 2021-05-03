@@ -1,4 +1,5 @@
 import nltk
+from werkzeug import ClosingIterator
 from . import *
 from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
@@ -14,6 +15,7 @@ import string
 from collections import defaultdict
 from collections import Counter
 import numpy as np
+import pickle
 from app.irsystem.controllers.redditRequest import getRedditData, top_five, getRedditResult
 from app.irsystem.controllers.new_search_method import build_inverted_index, compute_idf, compute_doc_norms, index_search
 
@@ -25,6 +27,59 @@ jsonPath = dir_path+'/../../../datasource/categorized_news.json'
 
 with open(jsonPath, "r") as f:
     newsList = json.load(f)
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+picklePath = dir_path+'/../../../datasource/subredditList.pkl'
+with open(picklePath, 'rb') as f:
+    subredditList = pickle.load(f)
+
+
+def getClosestSubreddit(query, subredditList=subredditList):
+    minimum_dist = 10000
+    minimum_name = ""
+    for i in range(len(subredditList)):
+        name = subredditList[i]
+        dist = levenshteinDistanceDP(name, query)
+        if dist == 0:
+            return name
+        if dist < minimum_dist:
+            minimum_dist = dist
+            minimum_name = name
+    return minimum_name
+
+
+def levenshteinDistanceDP(token1, token2):
+    """acknowledgement: https://blog.paperspace.com/implementing-levenshtein-distance-word-autocomplete-autocorrect/
+    """
+    distances = np.zeros((len(token1) + 1, len(token2) + 1))
+
+    for t1 in range(len(token1) + 1):
+        distances[t1][0] = t1
+
+    for t2 in range(len(token2) + 1):
+        distances[0][t2] = t2
+
+    a = 0
+    b = 0
+    c = 0
+
+    for t1 in range(1, len(token1) + 1):
+        for t2 in range(1, len(token2) + 1):
+            if (token1[t1-1] == token2[t2-1]):
+                distances[t1][t2] = distances[t1 - 1][t2 - 1]
+            else:
+                a = distances[t1][t2 - 1]
+                b = distances[t1 - 1][t2]
+                c = distances[t1 - 1][t2 - 1]
+
+                if (a <= b and a <= c):
+                    distances[t1][t2] = a + 1
+                elif (b <= a and b <= c):
+                    distances[t1][t2] = b + 1
+                else:
+                    distances[t1][t2] = c + 1
+    return distances[len(token1)][len(token2)]
+
 
 treebank_tokenizer = TreebankWordTokenizer()
 for news in newsList:
@@ -38,41 +93,8 @@ inv_idx = {key: val for key, val in inv_idx.items()
 doc_norms = compute_doc_norms(inv_idx, idf, len(newsList))
 
 
-# def get_cos_similarity(vec_text1, vec_text2):
-#     intersection = set(vec_text1.keys()) & set(vec_text2.keys())
-#     numerator = sum([vec_text1[x] * vec_text2[x] for x in intersection])
-#     sum1 = sum([vec_text1[x] ** 2 for x in list(vec_text1.keys())])
-#     sum2 = sum([vec_text2[x] ** 2 for x in list(vec_text2.keys())])
-#     denominator = math.sqrt(sum1) * math.sqrt(sum2)
-
-#     if not denominator:
-#         return 0.0
-#     else:
-#         return float(numerator) / denominator
-
-
-# def text_to_vector(text):
-#     words = WORD.findall(text)
-#     return Counter(words)
-
-
-# def sim_search(query):
-#     qvec = text_to_vector(query)
-#     result = []
-#     for news in newsList:
-#         title = news['title']
-#         tvec = text_to_vector(title)
-#         sim_measure = get_cos_similarity(qvec, tvec)
-#         news['sim'] = sim_measure
-
-#         result.append((news['title'],
-#                       news['sim'], news['url']))
-#     result = sorted(result, key=lambda x: x[1], reverse=True)
-#     returnList = [(x[0], x[2], x[1]) for x in result]
-#     return returnList[:10]
-
-
 def getComments(keyword):
+
     data = getRedditResult(keyword=keyword)
     return data
 
@@ -80,27 +102,24 @@ def getComments(keyword):
 @irsystem.route('/', methods=['GET'])
 def search():
     query = request.args.get('search')
+    srName = getClosestSubreddit(query)
     if not query:
         reddit = []
         data = []
         context = dict()
         output_message = ''
     else:
-        output_message = query
-        lst = query.split(' ')
-        reddit = []
-        for word in lst:
-            reddit_lst = getComments(word)
-            for item in reddit_lst:
-                reddit.append(item)
+        output_message = "Your Input: " + query + "; Closest subReddit: " + srName
+        redditResult = getComments(srName)
+
         newsRank = index_search(query, inv_idx, idf, doc_norms)
         newsResult = []
         for score, doc_id in newsRank[:10]:
             newsResult.append(
-                (newsList[doc_id]['title'], newsList[doc_id]['url'], score))
+                (newsList[doc_id]['title'], newsList[doc_id]['url'], round(score, 2)))
 
         context = {
-            'reddit': reddit,
+            'reddit': redditResult,
             'news': newsResult
         }
 
