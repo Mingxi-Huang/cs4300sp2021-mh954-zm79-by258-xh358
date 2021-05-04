@@ -102,13 +102,14 @@ def getComments(keyword):
 @irsystem.route('/', methods=['GET'])
 def search():
     query = request.args.get('search')
-    srName = getClosestSubreddit(query)
+
     if not query:
         reddit = []
         data = []
         context = dict()
         output_message = ''
     else:
+        srName = getClosestSubreddit(query, subredditList)
         output_message = "Your Input: " + query + "; Closest subReddit: " + srName
         redditResult = getComments(srName)
 

@@ -114,13 +114,14 @@ def getRedditResult(keyword):
 
 
 if __name__ == "__main__":
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    picklePath = dir_path+'/../../../datasource/subredditList.pkl'
-    with open(picklePath, 'rb') as f:
-        subredditList = pickle.load(f)
+    pass
+    # dir_path = os.path.dirname(os.path.realpath(__file__))
+    # picklePath = dir_path+'/../../../datasource/subredditList.pkl'
+    # with open(picklePath, 'rb') as f:
+    #     subredditList = pickle.load(f)
 
-    # print(subredditList[0:10])
-    print(getClosestSubreddit("chelsea", subredditList))
+    # # print(subredditList[0:10])
+    # print(getClosestSubreddit("chelsea", subredditList))
 
     # sort them by number of comments
 
