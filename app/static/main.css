@@ -76,8 +76,6 @@ h1{
 
     color:brown;
     font-weight: bold;
-    
-
 }
 
 h2{
@@ -197,4 +195,14 @@ color: #172a49;
     font-family: didot;
     margin: 15;
 
+}
+.footer{
+    text-align:center;
+    width: 100%;
+    font-size: 14;
+    background-color: #867C7C;
+    position:absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }
