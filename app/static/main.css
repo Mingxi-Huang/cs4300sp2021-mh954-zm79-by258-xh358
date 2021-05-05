@@ -58,21 +58,21 @@ position: sticky;
 }
 .output{
 box-shadow: 0px 25px 50px -10px rgba(0,0,0,0.75);
-background-color: #fff8DC;
+background-color: #E6E7E1;
 display: block;
 border: 8px solid #f1f0f0;
 text-align: justify;
 margin:10px;
 margin-left:30px;
 margin-right:30px;
-border-radius: 30px;
-opacity: 0.96;
+border-radius: 20px;
+opacity: 0.90;
 }
 /* h1{
     top:10%;
 } */
 h1{
-    text-shadow:5px 3px 3px #360f0f;
+    text-shadow:5px 3px 3px #867C7C;
 
     color:brown;
     font-weight: bold;
