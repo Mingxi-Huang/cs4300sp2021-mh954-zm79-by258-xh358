@@ -200,7 +200,8 @@ color: #172a49;
     font-size: 14;
     bottom: 0;
     width: 100%;
-    position: absolute;
+    position: relative;
     margin-right: 0px;
     margin-left: 0px;
+    text-align: center;
 }
