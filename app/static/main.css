@@ -196,13 +196,11 @@ color: #172a49;
     margin: 15;
 
 }
-.footer{
-    text-align:center;
-    width: 100%;
+.row{
     font-size: 14;
-    background-color: #867C7C;
-    position: bottom;
-    left: 0;
     bottom: 0;
     width: 100%;
+    position: absolute;
+    margin-right: 0px;
+    margin-left: 0px;
 }
