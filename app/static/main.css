@@ -220,5 +220,10 @@ color: #172a49;
 #category{
     width: 80%;
     word-wrap:break-word;
-    color: cornsilk;
+    color: rgb(248, 241, 211);
+}
+
+.spacing{
+    display: flex;
+    line-height: 10;
 }
