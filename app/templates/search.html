@@ -8,20 +8,21 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
 <head>
     <link rel="stylesheet" href="/static/bootstrap.min.css">
     <link rel="stylesheet" href="/static/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 
 <body>
     <button onclick="tFunction()" id="bon" title="Go to top">Top</button>
-    
     <div class="topcorner">
-        <p>© Team Go!News 2021 </p> 
-        <p>{{ netid }}</p>
+        <p>Project Name: {{ name }} </p>
+        <p>Student Name: {{ netid }}
+        </p>
     </div>
 
     <!-- <div style="background:url('img/news.jpg');"> -->
 
-    <form class="form-inline global-search" style="text-align: center;">
+    <form class="form-inline global-search" style="text-align: center;" id="search-form">
         <h1 style="font-size: 60px; font-family:Bodoni MT; color:rgb(37, 19, 19);text-align: center;">
             Go! News
         </h1>
@@ -29,15 +30,67 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
         <br><br>
 
         <div class="form-group">
-            <input id="input" type="text" name="search" class="form-control"
+            <input id="input-search" type="text" name="search" class="form-control"
                 placeholder="Please enter your search here:" value="{{output_message}}">
         </div>
-        <button type="submit" class="btn btn-info"> Go! </button>
+        <button type = 'submit' class="btn btn-info"> Go! </button>
+        <p>
+        <br>
+        <br>
+        <div id="category" class="form-group" name="category">
+       	    <input type="checkbox" value="ALL" class="ace_auth_id" name="ALL" > ALL</input>
+            <input type="checkbox" value="POLITICS" class="ace_auth_id" name="POLITICS" > POLITICS</input>
+            <input type="checkbox" value="ENTERTAINMENT" class="ace_auth_id" name="ENTERTAINMENT"> ENTERTAINMENT</input>
+            <input type="checkbox" value="WORLD NEWS" class="ace_auth_id" name="WORLD NEWS" > WORLD NEWS</input>
+            <input type="checkbox" value="COMEDY" class="ace_auth_id" name="COMEDY" > COMEDY</input>
+            <input type="checkbox" value="HEALTHY LIVING" class="ace_auth_id" name="HEALTHY LIVING" > HEALTHY LIVING</input>
+            <input type="checkbox" value="WELLNESS" class="ace_auth_id" name="WELLNESS" > WELLNESS</input>
+            <input type="checkbox" value="SPORTS" class="ace_auth_id" name="SPORTS" > SPORTS</input>
+            <input type="checkbox" value="MEDIA" class="ace_auth_id" name="MEDIA" > MEDIA</input>
+        </div> 
+        </br>
+        </p>
+
     </form>
 
+ 
 
+        <script>
+            function filterSelection(filtered_category) {
+            //select category
+            var idArray=[];
+             $(".ace_auth_id").each(function(){
+                 if($(this).is(':checked')){
+                 var id=$(this).val();
+                 idArray.push(id);
+                }
+            });
+            var ids=idArray.toString()
+            console.log(ids);
+            var search_text =  $("#input-search").val();
+            var searchData={
+                search: search_text, 
+                filtered_category: idArray 
+            }
+            /*$.POST("/search", JSON.stringify(searchData),function (result){
+            console.log("123")
+            console.log("result")
 
-    <div class="container">
+            },"json");*/
+            $.ajax({
+                url: "/search",
+                type: "POST",
+                data: JSON.stringify(searchData),
+                dataType: "json",
+                success: function (data) {
+                console.log("123"+data)
+            }
+        })
+            
+
+        }
+        </script>
+
         <form class="form-inline global-search">
 
             {% if context %}
@@ -56,14 +109,12 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
                 <p></p></br>
                 {% endfor %}
             </div>
-            <h3>Hot posts in related subreddit </h3>
+            <h3>Hot posts in related subreddit</h3>
             <div class="output">
 
                 {% for d in context.reddit %}
                 <br>
                 <div class="reddit-title">
-
-
                     <a href={{d[2]}}> {{d[0]}} </a>
                 </div>
                 <div class="reddit-text">
@@ -76,7 +127,8 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
             </div>
         </form>
 
-    </div>
+   
+
 
     <script>
         //Get the button
@@ -99,6 +151,8 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
             document.documentElement.scrollTop = 0;
         }
     </script>
+
+
     <!-- star -->
     <script>
 
@@ -130,13 +184,6 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
 
         }
     </script>
-    
-<!--
-        <div class="row" style="background-color: #2c1515; ">
-        <p style="color: white"> © Team Go!News 2021 </p>
-        <p style ="color: white;"></i></a> {{ netid }}</p>
-        </div>-->
 </body>
-
 
 </html>

@@ -206,3 +206,10 @@ color: #172a49;
     margin-left: 0px;
     text-align: center;
 }
+
+.category{
+    width:720px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}

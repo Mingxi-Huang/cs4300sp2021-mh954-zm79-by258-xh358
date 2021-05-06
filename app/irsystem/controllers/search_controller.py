@@ -102,6 +102,17 @@ def getComments(keyword):
 @irsystem.route('/', methods=['GET'])
 def search():
     query = request.args.get('search')
+    POLITICS = request.args.get('POLITICS')
+    ENTERTAINMENT = request.args.get('ENTERTAINMENT')
+    WORLD_NEWS = request.args.get('WORLD NEWS')
+    COMEDY = request.args.get('COMEDY')
+    HEALTHY_LIVING = request.args.get('HEALTHY LIVING')
+    WELLNESS = request.args.get('WELLNESS')
+    SPORTS = request.args.get('SPORTS')
+    MEDIA = request.args.get('MEDIA')
+
+    categoryList = [POLITICS, ENTERTAINMENT, WORLD_NEWS, COMEDY, HEALTHY_LIVING, WELLNESS, SPORTS, MEDIA]
+    print(categoryList)
 
     if not query:
         reddit = []
@@ -110,14 +121,19 @@ def search():
         output_message = ''
     else:
         srName = getClosestSubreddit(query, subredditList)
-        output_message = "Your Input: " + query + "; Closest subReddit: " + srName
+        output_message = query 
         redditResult = getComments(srName)
 
         newsRank = index_search(query, inv_idx, idf, doc_norms)
         newsResult = []
-        for score, doc_id in newsRank[:10]:
-            newsResult.append(
-                (newsList[doc_id]['title'], newsList[doc_id]['url'], round(score, 2)))
+
+        for score, doc_id in newsRank:
+            if categoryList == [None, None, None, None, None, None, None, None]:
+                newsResult.append((newsList[doc_id]['title'], newsList[doc_id]['url'], newsList[doc_id]['category'], round(score, 2)))
+            if newsList[doc_id]['category'] in categoryList:
+                newsResult.append((newsList[doc_id]['title'], newsList[doc_id]['url'], newsList[doc_id]['category'], round(score, 2)))
+            if len(newsResult) == 10:
+                break
 
         context = {
             'reddit': redditResult,
