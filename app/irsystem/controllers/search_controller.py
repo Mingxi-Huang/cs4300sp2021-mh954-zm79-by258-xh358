@@ -106,12 +106,16 @@ def getComments(keyword):
 
 
 def remove_symbols(strInput):
-    del_estr = string.punctuation + string.digits  # ASCII
-    replace = " "*len(del_estr)
-    tran_tab = str.maketrans(del_estr, replace)
-    strOutput = strInput.translate(tran_tab)
+    if strInput != None:
+        del_estr = string.punctuation + string.digits  # ASCII
+        replace = " "*len(del_estr)
+        tran_tab = str.maketrans(del_estr, replace)
+        strOutput = strInput.translate(tran_tab)
+    else:
+        strOutput = strInput
     return strOutput
 #print(remove_symbols('WORLD_NEWS'))
+#print(remove_symbols(None))
 
 def getNone(strInput):
     return None
@@ -127,15 +131,10 @@ def search():
     WELLNESS = request.args.get('WELLNESS')
     SPORTS = request.args.get('SPORTS')
     MEDIA = request.args.get('MEDIA')
+    #print(WORLD_NEWS)
 
-    if WORLD_NEWS == None and HEALTHY_LIVING != None:
-        categoryList = [POLITICS, ENTERTAINMENT, remove_symbols('WORLD_NEWS'), COMEDY, remove_symbols('HEALTHY_LIVING'), WELLNESS, SPORTS, MEDIA]
-    if WORLD_NEWS != None and HEALTHY_LIVING == None:
-        categoryList = [POLITICS, ENTERTAINMENT, remove_symbols('WORLD_NEWS'), COMEDY, getNone('HEALTHY_LIVING'), WELLNESS, SPORTS, MEDIA]
-    if WORLD_NEWS == None and HEALTHY_LIVING != None:
-        categoryList = [POLITICS, ENTERTAINMENT, getNone('WORLD_NEWS'), COMEDY, remove_symbol('HEALTHY_LIVING'), WELLNESS, SPORTS, MEDIA]
-    else:
-        categoryList = [POLITICS, ENTERTAINMENT, getNone('WORLD_NEWS'), COMEDY, getNone('HEALTHY_LIVING'), WELLNESS, SPORTS, MEDIA]
+    
+    categoryList = [POLITICS, ENTERTAINMENT, remove_symbols(WORLD_NEWS), COMEDY, remove_symbols(HEALTHY_LIVING), WELLNESS, SPORTS, MEDIA]
     print(categoryList)
 
     if not query:
