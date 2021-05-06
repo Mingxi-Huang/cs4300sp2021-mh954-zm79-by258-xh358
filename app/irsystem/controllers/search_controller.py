@@ -122,6 +122,7 @@ def getNone(strInput):
 
 @irsystem.route('/', methods=['GET'])
 def search():
+    #get frontend checkbox result
     query = request.args.get('search')
     POLITICS = request.args.get('POLITICS')
     ENTERTAINMENT = request.args.get('ENTERTAINMENT')
@@ -131,11 +132,10 @@ def search():
     WELLNESS = request.args.get('WELLNESS')
     SPORTS = request.args.get('SPORTS')
     MEDIA = request.args.get('MEDIA')
-    #print(WORLD_NEWS)
 
     
     categoryList = [POLITICS, ENTERTAINMENT, remove_symbols(WORLD_NEWS), COMEDY, remove_symbols(HEALTHY_LIVING), WELLNESS, SPORTS, MEDIA]
-    print(categoryList)
+    #print(categoryList)
 
     if not query:
         reddit = []
