@@ -7,6 +7,7 @@ import os
 import re
 from collections import Counter
 import math
+import string
 
 # add import
 import json
@@ -98,21 +99,30 @@ def getComments(keyword):
     data = getRedditResult(keyword=keyword)
     return data
 
+def remove_symbols(strInput):
+    del_estr = string.punctuation + string.digits  # ASCII
+    replace = " "*len(del_estr)
+    tran_tab = str.maketrans(del_estr, replace)
+    strOutput = strInput.translate(tran_tab)
+    return strOutput
+#print(remove_symbols('WORLD_NEWS'))
+    
+
 
 @irsystem.route('/', methods=['GET'])
 def search():
     query = request.args.get('search')
     POLITICS = request.args.get('POLITICS')
     ENTERTAINMENT = request.args.get('ENTERTAINMENT')
-    WORLD_NEWS = request.args.get('WORLD NEWS')
+    WORLD_NEWS = request.args.get('WORLD_NEWS')
     COMEDY = request.args.get('COMEDY')
-    HEALTHY_LIVING = request.args.get('HEALTHY LIVING')
+    HEALTHY_LIVING = request.args.get('HEALTHY_LIVING')
     WELLNESS = request.args.get('WELLNESS')
     SPORTS = request.args.get('SPORTS')
     MEDIA = request.args.get('MEDIA')
 
-    categoryList = [POLITICS, ENTERTAINMENT, WORLD_NEWS, COMEDY, HEALTHY_LIVING, WELLNESS, SPORTS, MEDIA]
-    #print(categoryList)
+    categoryList = [POLITICS, ENTERTAINMENT, remove_symbols('WORLD_NEWS'), COMEDY, remove_symbols('HEALTHY_LIVING'), WELLNESS, SPORTS, MEDIA]
+    print(categoryList)
 
     if not query:
         reddit = []
