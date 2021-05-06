@@ -106,8 +106,9 @@ def remove_symbols(strInput):
     strOutput = strInput.translate(tran_tab)
     return strOutput
 #print(remove_symbols('WORLD_NEWS'))
-    
 
+def getNone(strInput):
+    return None
 
 @irsystem.route('/', methods=['GET'])
 def search():
@@ -121,7 +122,14 @@ def search():
     SPORTS = request.args.get('SPORTS')
     MEDIA = request.args.get('MEDIA')
 
-    categoryList = [POLITICS, ENTERTAINMENT, remove_symbols('WORLD_NEWS'), COMEDY, remove_symbols('HEALTHY_LIVING'), WELLNESS, SPORTS, MEDIA]
+    if WORLD_NEWS == None and HEALTHY_LIVING != None:
+        categoryList = [POLITICS, ENTERTAINMENT, remove_symbols('WORLD_NEWS'), COMEDY, remove_symbols('HEALTHY_LIVING'), WELLNESS, SPORTS, MEDIA]
+    if WORLD_NEWS != None and HEALTHY_LIVING == None:
+        categoryList = [POLITICS, ENTERTAINMENT, remove_symbols('WORLD_NEWS'), COMEDY, getNone('HEALTHY_LIVING'), WELLNESS, SPORTS, MEDIA]
+    if WORLD_NEWS == None and HEALTHY_LIVING != None:
+        categoryList = [POLITICS, ENTERTAINMENT, getNone('WORLD_NEWS'), COMEDY, remove_symbol('HEALTHY_LIVING'), WELLNESS, SPORTS, MEDIA]
+    else:
+        categoryList = [POLITICS, ENTERTAINMENT, getNone('WORLD_NEWS'), COMEDY, getNone('HEALTHY_LIVING'), WELLNESS, SPORTS, MEDIA]
     print(categoryList)
 
     if not query:
