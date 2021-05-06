@@ -112,7 +112,7 @@ def search():
     MEDIA = request.args.get('MEDIA')
 
     categoryList = [POLITICS, ENTERTAINMENT, WORLD_NEWS, COMEDY, HEALTHY_LIVING, WELLNESS, SPORTS, MEDIA]
-    print(categoryList)
+    #print(categoryList)
 
     if not query:
         reddit = []
@@ -129,9 +129,9 @@ def search():
 
         for score, doc_id in newsRank:
             if categoryList == [None, None, None, None, None, None, None, None]:
-                newsResult.append((newsList[doc_id]['title'], newsList[doc_id]['url'], newsList[doc_id]['category'], round(score, 2)))
+                newsResult.append((newsList[doc_id]['title'], newsList[doc_id]['url'], round(score, 2)))
             if newsList[doc_id]['category'] in categoryList:
-                newsResult.append((newsList[doc_id]['title'], newsList[doc_id]['url'], newsList[doc_id]['category'], round(score, 2)))
+                newsResult.append((newsList[doc_id]['title'], newsList[doc_id]['url'], round(score, 2)))
             if len(newsResult) == 10:
                 break
 
@@ -140,4 +140,4 @@ def search():
             'news': newsResult
         }
 
-    return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, context=context)
+    return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, context=context, categoryList = categoryList)

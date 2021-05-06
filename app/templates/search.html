@@ -14,7 +14,7 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
 
 <body>
     <button onclick="tFunction()" id="bon" title="Go to top">Top</button>
-    <div class="topcorner">
+    <div class="topcorner" data-category={{categoryList}}>
         <p>Project Name: {{ name }} </p>
         <p>Student Name: {{ netid }}
         </p>
@@ -35,20 +35,19 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
         </div>
         <button type = 'submit' class="btn btn-info"> Go! </button>
         <p>
-        <br>
-        <br>
-        <div id="category" class="form-group" name="category">
-       	    <input type="checkbox" value="ALL" class="ace_auth_id" name="ALL" > ALL</input>
-            <input type="checkbox" value="POLITICS" class="ace_auth_id" name="POLITICS" > POLITICS</input>
-            <input type="checkbox" value="ENTERTAINMENT" class="ace_auth_id" name="ENTERTAINMENT"> ENTERTAINMENT</input>
-            <input type="checkbox" value="WORLD NEWS" class="ace_auth_id" name="WORLD NEWS" > WORLD NEWS</input>
-            <input type="checkbox" value="COMEDY" class="ace_auth_id" name="COMEDY" > COMEDY</input>
-            <input type="checkbox" value="HEALTHY LIVING" class="ace_auth_id" name="HEALTHY LIVING" > HEALTHY LIVING</input>
-            <input type="checkbox" value="WELLNESS" class="ace_auth_id" name="WELLNESS" > WELLNESS</input>
-            <input type="checkbox" value="SPORTS" class="ace_auth_id" name="SPORTS" > SPORTS</input>
-            <input type="checkbox" value="MEDIA" class="ace_auth_id" name="MEDIA" > MEDIA</input>
+        <div>
+        </div>
+        <div id="category" class="form-group category" name="category">
+       	    <input type="checkbox" value="ALL" class="ace_auth_id" name="ALL" onchange="myfunction()" > ALL</input>
+            <input type="checkbox" value="POLITICS" class="ace_auth_id" name="POLITICS" onchange="myfunction()"> POLITICS</input>
+            <input type="checkbox" value="ENTERTAINMENT" class="ace_auth_id" name="ENTERTAINMENT" onchange="myfunction()"> ENTERTAINMENT</input>
+            <input type="checkbox" value="WORLD NEWS" class="ace_auth_id" name="WORLD NEWS" onchange="myfunction()"> WORLD NEWS</input>
+            <input type="checkbox" value="COMEDY" class="ace_auth_id" name="COMEDY" onchange="myfunction()"> COMEDY</input>
+            <input type="checkbox" value="HEALTHY LIVING" class="ace_auth_id" name="HEALTHY LIVING" onchange="myfunction()"> HEALTHY LIVING</input>
+            <input type="checkbox" value="WELLNESS" class="ace_auth_id" name="WELLNESS" onchange="myfunction()"> WELLNESS</input>
+            <input type="checkbox" value="SPORTS" class="ace_auth_id" name="SPORTS" onchange="myfunction()"> SPORTS</input>
+            <input type="checkbox" value="MEDIA" class="ace_auth_id" name="MEDIA" onchange="myfunction()"> MEDIA</input>
         </div> 
-        </br>
         </p>
 
     </form>
@@ -56,16 +55,41 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
  
 
         <script>
-            function filterSelection(filtered_category) {
+        function myfunction(){
+            // var categoryList= $(".topcorner").data("category");
+            // console.log('categoryList' + categoryList);
+            var idArray=[];
+            $(".ace_auth_id").each(function(i){
+                if($(this).is(':checked')){
+                    var id=$(this).val();
+                   // localStorage.setItem(i,id);
+                     idArray.push(id);
+                }
+            });
+            console.log(idArray)
+            localStorage.setItem("idArray",JSON.stringify(idArray))
+}
+
+          $(function (){
+                 var idArrayMemory=JSON.parse(localStorage.getItem("idArray"));
+                for(var a in idArrayMemory){
+                    $("input:checkbox[value="+idArrayMemory[a]+"]").attr("checked","checked")
+       }
+    })
+            /*function filterSelection(filtered_category) {
             //select category
             var idArray=[];
              $(".ace_auth_id").each(function(){
-                 if($(this).is(':checked')){
-                 var id=$(this).val();
-                 idArray.push(id);
+                if($(this).is(':checked')){
+                var id=$(this).val();
+                localStorage.setItem(i,id);
+                localStorage.setItem("length",i)
+                //idArray.push(id);
                 }
             });
-            var ids=idArray.toString()
+
+            
+            var ids = idArray.toString()
             console.log(ids);
             var search_text =  $("#input-search").val();
             var searchData={
@@ -77,7 +101,7 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
             console.log("result")
 
             },"json");*/
-            $.ajax({
+            /*$.ajax({
                 url: "/search",
                 type: "POST",
                 data: JSON.stringify(searchData),
@@ -86,9 +110,8 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
                 console.log("123"+data)
             }
         })
-            
+        } */
 
-        }
         </script>
 
         <form class="form-inline global-search">
@@ -103,7 +126,7 @@ https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
                     <a href={{d[1]}}> {{d[0]}} </a>
                 </div>
                 <div class="newsscore">
-                    <p>Matching score: {{d[2]}} <span class="stars" score={{d[2]}}></span></p>
+                    <p>match-or-not: {{d[2]}} <span class="stars" score={{d[2]}}></span></p>
                 </div>
                 <br>
                 <p></p></br>

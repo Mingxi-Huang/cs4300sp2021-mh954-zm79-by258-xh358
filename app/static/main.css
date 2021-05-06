@@ -208,8 +208,17 @@ color: #172a49;
 }
 
 .category{
-    width:720px;
     display: flex;
-    align-items: center; 
+    /* word-wrap: break-word; */
+    align-items: center;
     justify-content: center;
+    font-family: initial;
+    font-size: medium;
+    font-weight: bold;
+}
+
+#category{
+    width: 80%;
+    word-wrap:break-word;
+    color: cornsilk;
 }
