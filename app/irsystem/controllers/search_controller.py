@@ -50,7 +50,10 @@ def getClosestSubreddit(query, subredditList=subredditList):
 
 
 def levenshteinDistanceDP(token1, token2):
-    """acknowledgement: https://blog.paperspace.com/implementing-levenshtein-distance-word-autocomplete-autocorrect/
+    """
+    acknowledgement: https://blog.paperspace.com/implementing-levenshtein-distance-word-autocomplete-autocorrect/
+
+    Return: Edit distance of two tokens
     """
     distances = np.zeros((len(token1) + 1, len(token2) + 1))
 
@@ -95,9 +98,12 @@ doc_norms = compute_doc_norms(inv_idx, idf, len(newsList))
 
 
 def getComments(keyword):
-
+    """
+    get the comments from most popular posts about the topic
+    """
     data = getRedditResult(keyword=keyword)
     return data
+
 
 def remove_symbols(strInput):
     del_estr = string.punctuation + string.digits  # ASCII
@@ -139,7 +145,7 @@ def search():
         output_message = ''
     else:
         srName = getClosestSubreddit(query, subredditList)
-        output_message = query 
+        output_message = query
         redditResult = getComments(srName)
 
         newsRank = index_search(query, inv_idx, idf, doc_norms)
@@ -147,9 +153,11 @@ def search():
 
         for score, doc_id in newsRank:
             if categoryList == [None, None, None, None, None, None, None, None]:
-                newsResult.append((newsList[doc_id]['title'], newsList[doc_id]['url'], round(score, 2)))
+                newsResult.append(
+                    (newsList[doc_id]['title'], newsList[doc_id]['url'], round(score, 2)))
             if newsList[doc_id]['category'] in categoryList:
-                newsResult.append((newsList[doc_id]['title'], newsList[doc_id]['url'], round(score, 2)))
+                newsResult.append(
+                    (newsList[doc_id]['title'], newsList[doc_id]['url'], round(score, 2)))
             if len(newsResult) == 10:
                 break
 
@@ -158,4 +166,4 @@ def search():
             'news': newsResult
         }
 
-    return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, context=context, categoryList = categoryList)
+    return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, context=context, categoryList=categoryList)

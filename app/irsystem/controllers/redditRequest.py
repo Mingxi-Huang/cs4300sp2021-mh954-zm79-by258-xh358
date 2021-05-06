@@ -9,6 +9,12 @@ import numpy as np
 
 
 def getClosestSubreddit(query, subredditList):
+    """
+    Given the query [query], go to a list of all subreddit [subredditList] with 
+    subscriber > 500, find the closest one
+
+    Return: the one subreddit name with closest edit distance
+    """
     minimum_dist = 10000
     minimum_name = ""
     for i in range(len(subredditList)):
@@ -23,6 +29,12 @@ def getClosestSubreddit(query, subredditList):
 
 
 def getRedditData(keyword):
+    """
+    Given a subreddit name, using Reddit API to get information about a post
+
+    Return: a dictionary containing posts information: subreddit, title, self 
+    text, number of comments, and url.
+    """
 
     auth = requests.auth.HTTPBasicAuth(
         'L8EUKo7XiZpgyQ', '9a5BnUJdM7k_RiGjB-QfUVQP2liwcA')
@@ -53,6 +65,12 @@ def getRedditData(keyword):
 
 
 def top_five(indexes, srDict):
+    """
+    Helper function for getRedditResult: given the index of posts that have top 
+    5 number of comments, get the title, selftext and url of those posts.
+
+    Return: a list of 5 most popular posts( with their title, text, url)
+    """
     result = list()
     for ind in indexes:
         title = srDict['title'][ind]
@@ -63,10 +81,12 @@ def top_five(indexes, srDict):
     return result
 
 
-"""acknowledgement: https://blog.paperspace.com/implementing-levenshtein-distance-word-autocomplete-autocorrect/"""
-
-
 def levenshteinDistanceDP(token1, token2):
+    """
+    acknowledgement: https://blog.paperspace.com/implementing-levenshtein-distance-word-autocomplete-autocorrect/
+
+    Return: Edit distance of two tokens
+    """
     distances = np.zeros((len(token1) + 1, len(token2) + 1))
 
     for t1 in range(len(token1) + 1):
@@ -98,6 +118,9 @@ def levenshteinDistanceDP(token1, token2):
 
 
 def getRedditResult(keyword):
+    """
+    Given a subreddit name, return the top five popular posts
+    """
     try:
         myDict = getRedditData(keyword)
         sortedByComment = sorted(
@@ -111,19 +134,3 @@ def getRedditResult(keyword):
     except:
         result = []
         return result
-
-
-if __name__ == "__main__":
-    pass
-    # dir_path = os.path.dirname(os.path.realpath(__file__))
-    # picklePath = dir_path+'/../../../datasource/subredditList.pkl'
-    # with open(picklePath, 'rb') as f:
-    #     subredditList = pickle.load(f)
-
-    # # print(subredditList[0:10])
-    # print(getClosestSubreddit("chelsea", subredditList))
-
-    # sort them by number of comments
-
-    # 0.num_comments 1. selftext 2. subreddit 3. title 4.url
-    # result = getRedditResult("china")
