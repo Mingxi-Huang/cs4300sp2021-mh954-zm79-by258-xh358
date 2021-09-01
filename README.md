@@ -6,5 +6,5 @@
 * Implemented the articles retrieval feature based on TF-IDF cosine similarity; retrieve social contents using Reddit API; deployed and maintained using Heroku.
 * Articles are categorized using machine learning algorithms such as random forest.
 
-Thanks to my teammates Xirui He, Caroline Ma, and Beining Yang
+Many thanks to my teammates Xirui He, Caroline Ma, and Beining Yang. 
 
